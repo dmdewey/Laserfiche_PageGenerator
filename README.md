@@ -1,5 +1,5 @@
 # Laserfiche_PageGenerator
-This Application is a console app that generates Laserfiche pages (TIFFs) using the repository Id of the entry.
+This Application is a console app that generates Laserfiche pages (TIFFs) using the repository Id of the entry. This is an early version of the application. It would work well as a middleware application but unfortunately has ACL issues when being used in conjunction with Laserfiche Workflow. Work is underway currently to rewrite as a REST API.
 
 ## Instructions :
 
@@ -15,3 +15,15 @@ This Application is a console app that generates Laserfiche pages (TIFFs) using 
    * Laserfiche.DocumentServices *10.2.0.0*
    * Laserfiche.RepositoryAccess *10.2.0.0*
 5. Clean and build 32bit console application.
+
+---
+
+Target framework : .NET Framework 4.5
+
+Plaform target: x86
+
+Consol Application
+
+Assembly name : Laserfiche_PageGenerator
+
+Default namespace : Laserfiche_PageGenerator
