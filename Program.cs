@@ -6,7 +6,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 
 /// <summary>
-/// This Application takes a repository entry in Laserfische that is a PDF electronic document,
+/// This Application takes a repository entry in Laserfiche that is a PDF electronic document,
 /// downloads it to a temporary folder,
 /// converts its pages to TIFF images,
 /// and imports it into the repository under the same ID.
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 /// </summary>
 /// 
 
-namespace Laserfiche_PageGenerator
+namespace Cni_Laserfiche_PageGenerator
 {
     class Program
     {
@@ -36,10 +36,10 @@ namespace Laserfiche_PageGenerator
             {
                 Logger.MessageToFile("Started looking at conversion....");
                 /* CONSTANTS */
-                string laserfische_server = ConfigurationManager.AppSettings["LaserfischeServer"];
-                string laserfische_repository = ConfigurationManager.AppSettings["LaserfischeRepository"];
-                string laserfische_user = ConfigurationManager.AppSettings["LaserfischeUser"];
-                string laserfische_password = ConfigurationManager.AppSettings["LaserfischePassword"];
+                string Laserfiche_server = ConfigurationManager.AppSettings["LaserficheServer"];
+                string Laserfiche_repository = ConfigurationManager.AppSettings["LaserficheRepository"];
+                string Laserfiche_user = ConfigurationManager.AppSettings["LaserficheUser"];
+                string Laserfiche_password = ConfigurationManager.AppSettings["LaserfichePassword"];
                 string temp_save_folder = ConfigurationManager.AppSettings["TemporarySaveFolder"];
                 /* Ghostscript specific parameters */
                 string tiff_image_resolution = "-r" + ConfigurationManager.AppSettings["TiffImageResolution"];
@@ -47,21 +47,21 @@ namespace Laserfiche_PageGenerator
                 string inputMime;
                 /* VARIABLES */
                 int entry_id = Int32.Parse(args[0]);
-                string message_id = "Laserfiche Entry#" + entry_id + "(" + laserfische_repository + ")";
+                string message_id = "Laserfiche Entry#" + entry_id + "(" + Laserfiche_repository + ")";
                 string message_id_eol = message_id + ".";
 
                 /* LASERFICHE SESSION */
-                RepositoryRegistration repositoryRegistration = new RepositoryRegistration(laserfische_server, laserfische_repository);
-                Session laserfischeSession = new Session
+                RepositoryRegistration repositoryRegistration = new RepositoryRegistration(Laserfiche_server, Laserfiche_repository);
+                Session LaserficheSession = new Session
                 {
                     IsSecure = false
                 };
-                laserfischeSession.LogIn(laserfische_user, laserfische_password, repositoryRegistration);
+                LaserficheSession.LogIn(Laserfiche_user, Laserfiche_password, repositoryRegistration);
 
                 /* LASERFICHE OBJECTS */
-                LaserficheReadStream electronicDocument = Document.ReadEdoc(entry_id, out inputMime, laserfischeSession);
-                DocumentInfo document = Document.GetDocumentInfo(entry_id, laserfischeSession);
-                EntryInfo entry = Entry.GetEntryInfo(entry_id, laserfischeSession);
+                LaserficheReadStream electronicDocument = Document.ReadEdoc(entry_id, out inputMime, LaserficheSession);
+                DocumentInfo document = Document.GetDocumentInfo(entry_id, LaserficheSession);
+                EntryInfo entry = Entry.GetEntryInfo(entry_id, LaserficheSession);
 
                 /* UNLOCK ENTRIES JUST IN CASE */
                 document.Unlock();
@@ -141,8 +141,8 @@ namespace Laserfiche_PageGenerator
                             electronicDocument.Close();
                             document.Dispose();
                             entry.Dispose();
-                            laserfischeSession.Close();
-                            laserfischeSession.Discard();
+                            LaserficheSession.Close();
+                            LaserficheSession.Discard();
                         }
                         
                     }
